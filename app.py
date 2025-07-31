@@ -7,6 +7,7 @@ from faicons import icon_svg
 from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 from shinywidgets import output_widget, render_plotly
 from stocks import stocks
+from datetime import datetime
 
 # Default to the last 6 months
 end = pd.Timestamp.now()
@@ -14,10 +15,45 @@ start = end - pd.Timedelta(weeks=26)
 
 app_dir = Path(__file__).parent
 
+from datetime import datetime
+
 app_ui = ui.page_sidebar(
     ui.sidebar(
+        ui.h2("Stock Explorer", class_="text-center"),
+        ui.p(
+            "An interactive tool for exploring stock price data and trends.",
+            class_="text-center",
+        ),
+        ui.hr(),
+
         ui.input_selectize("ticker", "Select Stocks", choices=stocks, selected="AAPL"),
         ui.input_date_range("dates", "Select dates", start=start, end=end),
+
+        ui.hr(),
+        ui.h6("Links:"),
+        ui.a(
+            "dfintel25 GitHub",
+            href="https://github.com/dfintel25",
+            target="_blank",
+        ),
+        ui.a(
+            "GitHub Repo for this app",
+            href="https://github.com/dfintel25/cintel-06-custom",
+            target="_blank",
+        ),
+        ui.a(
+            "Stock Price Tracker; Template from Shiny",
+            href="https://shiny.posit.co/py/templates/stock-app/",
+            target="_blank",
+        ),
+        ui.a("Stock Price Tracker GitHub", href="https://github.com/posit-dev/py-shiny-templates/tree/main/stock-app", target="_blank"),
+        ui.a(
+            "PyShiny Express",
+            href="https://shiny.posit.co/blog/posts/shiny-express/",
+            target="_blank",
+        ),
+        ui.hr(),
+        ui.h6(f"Last updated: {datetime.now().strftime('%H:%M:%S')}")
     ),
     ui.layout_column_wrap(
         ui.value_box(
@@ -53,6 +89,7 @@ app_ui = ui.page_sidebar(
     title="Stock explorer",
     fillable=True,
 )
+
 
 
 def server(input: Inputs, output: Outputs, session: Session):
