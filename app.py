@@ -128,8 +128,8 @@ def server(input: Inputs, output: Outputs, session: Session):
                     prices[ticker] = data["Close"].iloc[-1]
             except Exception:
                 continue
-    sorted_prices = sorted(prices.items(), key=lambda x: x[1], reverse=True)
-    return sorted_prices[:5]
+        sorted_prices = sorted(prices.items(), key=lambda x: x[1], reverse=True)
+        return sorted_prices[:5]
 
     @render.ui
     def price():
