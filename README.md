@@ -84,4 +84,5 @@ cd ..
 cd C:\Projects\cintel-06-custom
 rsconnect add --name dfintel25 --server shinyapps.io ...
 rsconnect deploy shiny . --name dfintel25 --title "Stock Explorer" --app-name stock-explorer
+If making code changes: rsconnect deploy shiny . --name dfintel25 --title "Stock Explorer"
 ```
