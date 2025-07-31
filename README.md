@@ -46,8 +46,30 @@ git push -u origin main
 import os os.system('jupyter nbconvert --to html python-ds.ipynb')
 ```
 ### 7. Specific Module 6 Imports
+```
 python -m pip install beautifulsoup4
 python -m pip install html5lib
 python -m pip install requests
 python -m pip install spacy
 python -m pip install spacytextblob
+```
+### 8. Exporting the app using `shinylive`
+```
+pip install shinylive
+shinylive export . shinylive-app
+cd shinylive-app
+git init
+git remote add origin https://github.com/dfintel25/cintel-06-custom.git
+git checkout -b gh-pages
+git add .
+git commit -m "Deploy shinylive app"
+git push -u origin gh-pages --force
+
+Go to your repo: dfintel25/cintel-06-custom
+    Navigate to:
+    Settings → Pages
+    Under "Build and deployment":
+    Set Source to gh-pages branch
+    Set the folder to / (root)
+    Click Save
+```
