@@ -80,6 +80,10 @@ app_ui = ui.page_sidebar(
             full_screen=True,
         ),
         ui.card(
+            ui.card_header("Top 5 Stocks by Price"),
+            ui.output_data_frame("top_5_table"),
+    ),
+        ui.card(
             ui.card_header("Latest data"),
             ui.output_data_frame("latest_data"),
         ),
@@ -112,6 +116,20 @@ def server(input: Inputs, output: Outputs, session: Session):
         close = get_data()["Close"]
         change = close.iloc[-1] - close.iloc[-2]
         return change / close.iloc[-2] * 100
+
+    @reactive.calc
+    def top_5_prices():
+        prices = {}
+        for ticker in stocks:
+            try:
+                stock = yf.Ticker(ticker)
+                data = stock.history(period="1d")
+                if not data.empty:
+                    prices[ticker] = data["Close"].iloc[-1]
+            except Exception:
+                continue
+    sorted_prices = sorted(prices.items(), key=lambda x: x[1], reverse=True)
+    return sorted_prices[:5]
 
     @render.ui
     def price():
@@ -189,6 +207,12 @@ def server(input: Inputs, output: Outputs, session: Session):
         # Format values
         result["Value"] = result["Value"].apply(lambda v: f"{v:.1f}")
         return result
+    @render.data_frame
+    def top_5_table():
+        top_data = top_5_prices()
+        df = pd.DataFrame(top_data, columns=["Ticker", "Price"])
+        df["Price"] = df["Price"].map(lambda x: f"${x:,.2f}")
+        return df
 
 
 app = App(app_ui, server)
