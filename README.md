@@ -73,3 +73,15 @@ Go to your repo: dfintel25/cintel-06-custom
     Set the folder to / (root)
     Click Save
 ```
+### 9. Connecting to ShinyApps.io
+```
+[ShinyApps.io](https://www.shinyapps.io/)
+pip install rsconnect-python
+rsconnect --version
+rsconnect add --name dfintel25 --server shinyapps.io
+rsconnect add --account dfintel25 --name dfintel25 --token 1877325D96D5F585F9E67F8AEC905F89 --secret()
+cd ..
+cd C:\Projects\cintel-06-custom
+rsconnect add --name dfintel25 --server shinyapps.io ...
+rsconnect deploy shiny . --name dfintel25 --title "Stock Explorer" --app-name stock-explorer
+```
